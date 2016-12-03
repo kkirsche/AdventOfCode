@@ -22,7 +22,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Challenges
+
+#### Day 1
+
+```
+bin/day1_challenge
+```
+
+### Tests
+
+```
+bin/tests
+```
 
 ## Development
 
@@ -33,4 +45,3 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/adventOfCode.
-
