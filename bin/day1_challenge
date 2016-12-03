@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "adventOfCode"
+
+@aoc_day1 = AdventOfCode::Day1::Challenge.new 'input.txt'
+result = @aoc_day1.run
+puts "Distance: #{result}"
