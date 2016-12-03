@@ -24,7 +24,7 @@ module AdventOfCode
         return @position.total_distance_from_start
       end
 
-      @private
+      private
       def input_path(filename)
         File.join(File.expand_path('..', File.dirname(File.expand_path(__FILE__))), "inputs/day1/#{filename}")
       end
@@ -40,37 +40,16 @@ module AdventOfCode
         @total_blocks = total_blocks
       end
 
-      def turn_left(spaces)
+      def turn(direction)
         case @facing
         when 'N'
-          @facing = 'W'
-          walk_west spaces
+          turn_from_north direction
         when 'E'
-          @facing = 'N'
-          walk_north spaces
+          turn_from_east direction
         when 'S'
-          @facing = 'E'
-          walk_east spaces
+          turn_from_south direction
         when 'W'
-          @facing = 'S'
-          walk_south spaces
-        end
-      end
-
-      def turn_right(spaces)
-        case @facing
-        when 'N'
-          @facing = 'E'
-          walk_east spaces
-        when 'E'
-          @facing = 'S'
-          walk_south spaces
-        when 'S'
-          @facing = 'W'
-          walk_west spaces
-        when 'W'
-          @facing = 'N'
-          walk_north spaces
+          turn_from_west direction
         end
       end
 
@@ -99,6 +78,46 @@ module AdventOfCode
         @total_blocks += spaces
       end
 
+      def turn_from_north(direction)
+        if direction.left?
+          @facing = 'W'
+          walk_west direction.spaces
+        else
+          @facing = 'E'
+          walk_east direction.spaces
+        end
+      end
+
+      def turn_from_east(direction)
+        if direction.left?
+          @facing = 'N'
+          walk_north direction.spaces
+        else
+          @facing = 'S'
+          walk_south direction.spaces
+        end
+      end
+
+      def turn_from_south(direction)
+        if direction.left?
+          @facing = 'E'
+          walk_east direction.spaces
+        else
+          @facing = 'W'
+          walk_west direction.spaces
+        end
+      end
+
+      def turn_from_west(direction)
+        if direction.left?
+          @facing = 'S'
+          walk_south direction.spaces
+        else
+          @facing = 'N'
+          walk_north direction.spaces
+        end
+      end
+
       def total_distance_from_start
         @x.abs + @y.abs
       end
@@ -114,14 +133,17 @@ module AdventOfCode
       end
 
       def take_direction(current_position)
-        case @turn
-        when 'L'
-          current_position.turn_left @spaces
-        when 'R'
-          current_position.turn_right @spaces
-        end
+          current_position.turn self
 
         current_position
+      end
+
+      def left?
+        return @turn == 'L'
+      end
+
+      def right?
+        return @turn == 'R'
       end
     end
   end
