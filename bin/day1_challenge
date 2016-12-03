@@ -3,6 +3,7 @@
 require "bundler/setup"
 require "adventOfCode"
 
+# Part 1
 @aoc_day1 = AdventOfCode::Day1::Challenge.new 'input.txt'
-result = @aoc_day1.run
+result = @aoc_day1.run_part_1
 puts "Distance: #{result}"

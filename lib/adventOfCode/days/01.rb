@@ -12,7 +12,7 @@ module AdventOfCode
         @contents = file.read
       end
 
-      def run
+      def run_part_1
         # Get an array of the directions
         directions_to_hq = @contents.split(', ')
 
