@@ -1,2 +1,10 @@
 require "bundler/gem_tasks"
-task :default => :spec
+require "rake/testtask"
+
+Rake::TestTask.new(:test) do |t|
+  require 'minitest/autorun'
+  require "adventOfCode"
+  require "adventOfCode/days/01_test"
+end
+
+task :default => :test
