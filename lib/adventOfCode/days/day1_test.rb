@@ -1,6 +1,5 @@
 require 'minitest/autorun'
 
-
 module AdventOfCode
   module Day1
     class TestChallenge < Minitest::Test

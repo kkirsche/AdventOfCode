@@ -8,7 +8,7 @@ Rake::TestTask.new(:test) do |t|
   end
   require 'minitest/autorun'
   require "adventOfCode"
-  require "adventOfCode/days/01_test"
+  require "adventOfCode/days/day1_test"
 end
 
 task :default => :test

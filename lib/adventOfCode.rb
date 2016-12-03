@@ -1,5 +1,5 @@
 require 'adventOfCode/version'
-require 'adventOfCode/days/01'
+require 'adventOfCode/days/day1'
 
 module AdventOfCode
 end
