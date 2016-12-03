@@ -1,6 +1,6 @@
 # AdventOfCode
 
-[![Build Status](https://travis-ci.org/kkirsche/AdventOfCode.svg?branch=master)](https://travis-ci.org/kkirsche/AdventOfCode) * [![Code Climate](https://codeclimate.com/github/kkirsche/AdventOfCode/badges/gpa.svg)](https://codeclimate.com/github/kkirsche/AdventOfCode)
+[![Build Status](https://travis-ci.org/kkirsche/AdventOfCode.svg?branch=master)](https://travis-ci.org/kkirsche/AdventOfCode) • [![Code Climate](https://codeclimate.com/github/kkirsche/AdventOfCode/badges/gpa.svg)](https://codeclimate.com/github/kkirsche/AdventOfCode)
 
 ## Installation
 
