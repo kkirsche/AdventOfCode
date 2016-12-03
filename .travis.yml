@@ -15,3 +15,7 @@ gemfile:
 
 notifications:
   email: false
+
+addons:
+    code_climate:
+        repo_token: 81d8be15cbe7dcbba348c6d7671681e03058337dcbe725e66e2e363d88a228ac
