@@ -6,7 +6,7 @@ module AdventOfCode
         # Get the R or L
         @turn = direction[0,1]
         # Get the number of spaces to move
-        @spaces = direction[1,2].to_i
+        @spaces = direction[1..-1].to_i
       end
 
       def take_direction(current_position)
