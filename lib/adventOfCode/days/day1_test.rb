@@ -20,6 +20,12 @@ module AdventOfCode
         result = @aoc_day1.run_part_1
         assert_equal 12, result
       end
+
+      def test_150_blocks_away
+        @aoc_day1 = AdventOfCode::Day1::Challenge.new 'test4.txt'
+        result = @aoc_day1.run_part_1
+        assert_equal 150, result
+      end
     end
   end
 end
