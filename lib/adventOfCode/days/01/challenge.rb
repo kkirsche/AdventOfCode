@@ -28,6 +28,13 @@ module AdventOfCode
         return @position.get_first_duplicate_location
       end
 
+      def run_both_parts
+        {
+          part1: run_part_1,
+          part2: run_part_2
+        }
+      end
+
       private
       def input_path(filename)
         File.join(File.expand_path('..', File.expand_path('..', File.dirname(File.expand_path(__FILE__)))), "inputs/day1/#{filename}")

@@ -5,9 +5,6 @@ require "adventOfCode"
 
 # Part 1
 @aoc_day1 = AdventOfCode::Day1::Challenge.new 'input.txt'
-result = @aoc_day1.run_part_1
-puts "Distance: #{result}"
-
-# Part 2
-result2 = @aoc_day1.run_part_2
-puts "The first duplicate position had a distance of: #{result2}"
+result = @aoc_day1.run_both_parts
+puts "Distance: #{result[:part1]}"
+puts "The first duplicate position had a distance of: #{result[:part2]}"
