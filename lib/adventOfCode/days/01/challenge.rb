@@ -24,6 +24,10 @@ module AdventOfCode
         return @position.total_distance_from_start
       end
 
+      def run_part_2
+        return @position.get_first_duplicate_location
+      end
+
       private
       def input_path(filename)
         File.join(File.expand_path('..', File.expand_path('..', File.dirname(File.expand_path(__FILE__)))), "inputs/day1/#{filename}")
