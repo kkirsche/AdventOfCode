@@ -26,6 +26,12 @@ module AdventOfCode
         result = @aoc_day1.run_part_1
         assert_equal 150, result
       end
+
+      def test_first_duplicate_location
+        @aoc_day1 = AdventOfCode::Day1::Challenge.new 'test5.txt'
+        result = @aoc_day1.run_both_parts
+        assert_equal 8, result[:part2]
+      end
     end
   end
 end
