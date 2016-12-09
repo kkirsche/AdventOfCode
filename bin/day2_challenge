@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "adventOfCode"
+
+# Part 1
+@aoc_day2 = AdventOfCode::Day2::Challenge.new 'input.txt'
+result = @aoc_day2.run_part_1
+puts "Bathroom code: #{result}"

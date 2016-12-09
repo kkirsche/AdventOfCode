@@ -6,12 +6,6 @@ module AdventOfCode
         set_contents filename
       end
 
-      def set_contents(filename)
-        # Get instructions
-        file = File.open input_path(filename)
-        @contents = file.read
-      end
-
       def run_part_1
         # Get an array of the directions
         directions_to_hq = @contents.split(', ')
@@ -38,6 +32,12 @@ module AdventOfCode
       private
       def input_path(filename)
         File.join(File.expand_path('..', File.expand_path('..', File.dirname(File.expand_path(__FILE__)))), "inputs/day1/#{filename}")
+      end
+
+      def set_contents(filename)
+        # Get instructions
+        file = File.open input_path(filename)
+        @contents = file.read
       end
     end
   end
