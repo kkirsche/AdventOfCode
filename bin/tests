@@ -1,7 +1,0 @@
-#!/usr/bin/env ruby
-
-require "bundler/setup"
-require 'minitest/autorun'
-require "adventOfCode"
-require "adventOfCode/days/day1_test"
-require "adventOfCode/days/day2_test"
