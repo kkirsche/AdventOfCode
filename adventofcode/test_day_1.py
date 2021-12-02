@@ -1,5 +1,4 @@
 from typing import Literal, Type
-from unittest import TestCase, main
 
 from pytest import mark
 
@@ -99,26 +98,22 @@ def solve(solver: Solver) -> Results:
         return solve_not_windowed(solver.elevations)
 
 
-class TestImplementation(TestCase):
-    @mark.parametrize("kls,expected", [(Singular, 7), (Windowed, 5)])  # type: ignore
-    def test_example_part1(self, kls: Type[Solver], expected: int) -> None:
-        challenge = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
+@mark.parametrize("kls, expected", [(Singular, 7), (Windowed, 5)])  # type: ignore
+def test_example_part1(kls: Type[Solver], expected: int) -> None:
+    challenge = [199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
+    solver = kls(elevations=challenge)
+    results = solve(solver)
+    assert results.increased == expected
+
+
+@mark.parametrize("kls, expected", [(Singular, 1466), (Windowed, 1491)])  # type: ignore
+def test_parts(kls: Type[Solver], expected: int) -> None:
+    challenge = []
+    with open("inputs/day1.txt", mode="r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line:
+                challenge.append(int(line))
         solver = kls(elevations=challenge)
         results = solve(solver)
-        self.assertEqual(results.increased, expected)
-
-    @mark.parametrize("kls,expected", [(Singular, 1466), (Windowed, 1491)])  # type: ignore
-    def test_parts(self, kls: Type[Solver], expected: int) -> None:
-        challenge = []
-        with open("inputs/day1-pt1.txt", mode="r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if line:
-                    challenge.append(int(line))
-            solver = kls(elevations=challenge)
-            results = solve(solver)
-            self.assertEqual(results.increased, expected)
-
-
-if __name__ == "__main__":
-    main()
+        assert results.increased == expected
