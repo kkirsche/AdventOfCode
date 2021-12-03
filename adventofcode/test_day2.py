@@ -1,3 +1,4 @@
+# Day 2: Dive!
 from dataclasses import dataclass
 from enum import Enum, unique
 from unittest import TestCase, main

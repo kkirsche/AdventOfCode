@@ -1,3 +1,4 @@
+# Day 1: Sonar Sweep
 from typing import Literal, Type
 
 from pytest import mark
