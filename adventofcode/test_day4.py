@@ -1,6 +1,6 @@
 # Day 4: Giant Squid
-from collections import Counter
-from typing import Literal, Optional
+from abc import ABC, abstractmethod
+from typing import Optional, Type
 from unittest import TestCase
 
 from adventofcode.data import load_puzzle
@@ -116,7 +116,7 @@ class BingoBoard:
         return self.grid[coordinate.y][coordinate.x]
 
 
-class AnnouncedNumberStrategy:
+class Strategy(ABC):
     announcement: str  # the order before it's been parsed
     _order: Optional[list[int]] = None
 
@@ -129,6 +129,12 @@ class AnnouncedNumberStrategy:
             self._order = [int(x) for x in self.announcement.split(",")]
         return self._order
 
+    @abstractmethod
+    def play_boards(self, boards: list[BingoBoard]) -> tuple[BingoBoard, int]:
+        pass
+
+
+class FirstBoard(Strategy):
     def play_boards(self, boards: list[BingoBoard]) -> tuple[BingoBoard, int]:
         for value in self.order:
             for board in boards:
@@ -139,21 +145,39 @@ class AnnouncedNumberStrategy:
         raise ValueError("No winning board found")
 
 
+class FinalBoard(Strategy):
+    def play_boards(self, boards: list[BingoBoard]) -> tuple[BingoBoard, int]:
+        excluded = set()
+        for value in self.order:
+            for board in boards:
+                if board.id in excluded:
+                    continue
+                board.play(value)
+                if board.check_bingo():
+                    excluded.add(board.id)
+                    print(f"Bingo for {board.id} with {value}")
+                    if len(excluded) == len(boards):
+                        return board, value
+        raise ValueError("No winning board found")
+
+
 class BingoPuzzle:
     puzzle_definition: str
     boards: list[BingoBoard]
-    strategy: AnnouncedNumberStrategy
+    strategy_type: Type[Strategy]
+    strategy: Strategy
     winner: Optional[BingoBoard] = None
     winning_number: Optional[int] = None
 
-    def __init__(self, puzzle_definition: str) -> None:
+    def __init__(self, puzzle_definition: str, strategy_type: Type[Strategy]) -> None:
         self.boards = []
         self.puzzle_definition = puzzle_definition
+        self.strategy_type = strategy_type
         self._parse_puzzle_definition()
 
     def _parse_puzzle_definition(self) -> None:
         puzzle_lines = self.puzzle_definition.split("\n")
-        self.strategy = AnnouncedNumberStrategy(puzzle_lines.pop(0))
+        self.strategy = self.strategy_type(puzzle_lines.pop(0))
         puzzles = "\n".join(puzzle_lines).split("\n\n")
         for idx, puzzle in enumerate(puzzles):
             self.boards.append(BingoBoard(puzzle=puzzle, id=idx + 1))
@@ -165,15 +189,23 @@ class BingoPuzzle:
 
 
 class TestDay4Solution(TestCase):
-    def test_example_pt1(self) -> None:
+    def test_example_structure(self) -> None:
         challenge = load_puzzle(day=4, example=True, filter_none=False)
-        puzzle = BingoPuzzle("\n".join(challenge))
+        puzzle = BingoPuzzle(
+            puzzle_definition="\n".join(challenge), strategy_type=FirstBoard
+        )
         # Ensure we parsed the puzzle correctly
         # start with the number of puzzles and the size of them
         assert len(puzzle.boards) == 3
         assert puzzle.boards[0].rows[0] == {22, 13, 17, 11, 0}
         assert puzzle.boards[0].columns[0] == {22, 8, 21, 6, 1}
         assert puzzle.boards[0].diagnols[0] == {22, 2, 14, 18, 19}
+
+    def test_example_pt1(self) -> None:
+        challenge = load_puzzle(day=4, example=True, filter_none=False)
+        puzzle = BingoPuzzle(
+            puzzle_definition="\n".join(challenge), strategy_type=FirstBoard
+        )
         puzzle.play()
         # verify the winning number is correct, in both locations
         assert puzzle.winning_number == 24
@@ -183,9 +215,25 @@ class TestDay4Solution(TestCase):
         assert puzzle.winner.score == 4_512
         assert puzzle.winner.id == 3
 
+    def test_example_pt2(self) -> None:
+        challenge = load_puzzle(day=4, example=True, filter_none=False)
+        puzzle = BingoPuzzle(
+            puzzle_definition="\n".join(challenge), strategy_type=FinalBoard
+        )
+        puzzle.play()
+        # verify the winning number is correct, in both locations
+        assert puzzle.winning_number == 13
+        assert puzzle.winner is not None
+        assert puzzle.winner.retrieve(puzzle.winner._hit_spaces[-1]) == 13
+        assert puzzle.winner.unmarked_sum == 148
+        assert puzzle.winner.score == 1_924
+        assert puzzle.winner.id == 2
+
     def test_pt1(self) -> None:
         challenge = load_puzzle(day=4, example=False, filter_none=False)
-        puzzle = BingoPuzzle("\n".join(challenge))
+        puzzle = BingoPuzzle(
+            puzzle_definition="\n".join(challenge), strategy_type=FirstBoard
+        )
         # Ensure we parsed the puzzle correctly
         # start with the number of puzzles and the size of them
         puzzle.play()
@@ -193,3 +241,16 @@ class TestDay4Solution(TestCase):
         assert puzzle.winner.score == 55_770
         assert puzzle.winner.id == 76
         assert puzzle.winning_number == 78
+
+    def test_pt2(self) -> None:
+        challenge = load_puzzle(day=4, example=False, filter_none=False)
+        puzzle = BingoPuzzle(
+            puzzle_definition="\n".join(challenge), strategy_type=FinalBoard
+        )
+        # Ensure we parsed the puzzle correctly
+        # start with the number of puzzles and the size of them
+        puzzle.play()
+        assert puzzle.winner is not None
+        assert puzzle.winner.score == 2_980
+        assert puzzle.winner.id == 45
+        assert puzzle.winning_number == 10
