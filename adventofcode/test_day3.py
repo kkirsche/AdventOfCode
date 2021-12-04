@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from typing import Optional
 from unittest import TestCase
 
+from adventofcode.data import load_puzzle
+
 
 @dataclass
 class Locations:
@@ -142,11 +144,7 @@ class DiagnosticReportInterpretor:
 
 class TestDay3Solution(TestCase):
     def load_report(self, example: bool = False) -> list[str]:
-        filename = "inputs/day3-example.txt" if example else "inputs/day3.txt"
-        with open(filename, mode="r", encoding="utf-8") as f:
-            content = f.read()
-            content_list = content.splitlines()
-            return list(filter(None, content_list))
+        return load_puzzle(3, example)
 
     def test_example_pt1(self) -> None:
         diagnostic_report = self.load_report(example=True)

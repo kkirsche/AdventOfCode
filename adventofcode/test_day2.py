@@ -3,6 +3,8 @@ from dataclasses import dataclass
 from enum import Enum, unique
 from unittest import TestCase, main
 
+from adventofcode.data import load_puzzle
+
 
 @dataclass
 class Coordinates:
@@ -100,24 +102,14 @@ class TestImplementation(TestCase):
         )
 
     def test_part1(self) -> None:
-        instructions = []
+        instructions = [Instruction(line) for line in load_puzzle(2)]
         submarine = Submarine(use_aim=False)
-        with open("inputs/day2.txt", mode="r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if line:
-                    instructions.append(Instruction(line))
         coordinates = submarine.deploy(route=instructions)
         assert coordinates.location == Coordinates(depth=741, position=1998).location
 
     def test_part2(self) -> None:
-        instructions = []
+        instructions = [Instruction(line) for line in load_puzzle(2)]
         submarine = Submarine(use_aim=True)
-        with open("inputs/day2.txt", mode="r", encoding="utf-8") as f:
-            for line in f:
-                line = line.strip()
-                if line:
-                    instructions.append(Instruction(line))
         coordinates = submarine.deploy(route=instructions)
         assert (
             coordinates.location

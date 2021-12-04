@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Advent of Code"
 authors = ["Kevin Kirsche <kevin.kirsche@one.verizon.com>"]
 license = "MIT"
+include = ["adventofcode/inputs/*.txt"]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -46,7 +47,7 @@ color = true
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "-ra --strict-markers --strict-config"
-testpaths = ["tests"]
+testpaths = ["adventofcode"]
 markers = ["destructive", "mutative"]
 
 [tool.pylint."MESSAGES CONTROL"]

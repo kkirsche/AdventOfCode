@@ -3,6 +3,8 @@ from typing import Literal, Type
 
 from pytest import mark
 
+from adventofcode.data import load_puzzle
+
 
 class Results:
     increased: int = 0
@@ -110,11 +112,10 @@ def test_example_part1(kls: Type[Solver], expected: int) -> None:
 @mark.parametrize("kls, expected", [(Singular, 1466), (Windowed, 1491)])  # type: ignore
 def test_parts(kls: Type[Solver], expected: int) -> None:
     challenge = []
-    with open("inputs/day1.txt", mode="r", encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if line:
-                challenge.append(int(line))
-        solver = kls(elevations=challenge)
-        results = solve(solver)
-        assert results.increased == expected
+    for line in load_puzzle(day=1):
+        line = line.strip()
+        if line:
+            challenge.append(int(line))
+    solver = kls(elevations=challenge)
+    results = solve(solver)
+    assert results.increased == expected
