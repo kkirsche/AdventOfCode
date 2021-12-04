@@ -53,7 +53,7 @@ class BingoBoard:
 
     @property
     def columns(self) -> list[set[int]]:
-        return [set(column) for column in zip(*self.grid)]
+        return [set(column) for column in zip(*self.grid, strict=True)]
 
     @property
     def diagnols(self) -> list[set[int]]:
